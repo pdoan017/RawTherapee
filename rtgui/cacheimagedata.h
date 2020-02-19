@@ -20,6 +20,7 @@
 #define _CACHEIMAGEDATA_
 
 #include <glibmm.h>
+#include <iostream>
 #include "options.h"
 #include "../rtengine/rtengine.h"
 #include "../rtengine/imageformat.h"
@@ -46,6 +47,7 @@ public:
     char  hour;
     char  min;
     char  sec;
+    tm* timestamp;
     // exif info
     bool  exifValid;
     unsigned short frameCount;
@@ -96,8 +98,8 @@ public:
     rtexif::TagDirectory* getBestExifData (rtengine::ImageSource *imgSource, rtengine::procparams::RAWParams *rawParams) const override { return nullptr; }
     bool hasIPTC (unsigned int frame = 0) const override { return false; }
     rtengine::procparams::IPTCPairs getIPTCData (unsigned int frame = 0) const override;
-    tm getDateTime (unsigned int frame = 0) const override { return tm{}; }
-    time_t getDateTimeAsTS(unsigned int frame = 0) const override { return time_t(-1); }
+    tm getDateTime (unsigned int frame = 0) const override { return *timestamp; }
+    time_t getDateTimeAsTS(unsigned int frame = 0) const override { return mktime( timestamp ); }
     int getISOSpeed (unsigned int frame = 0) const override { return iso; }
     double getFNumber  (unsigned int frame = 0) const override { return fnumber; }
     double getFocalLen (unsigned int frame = 0) const override { return focalLen; }

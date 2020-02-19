@@ -37,6 +37,7 @@ CacheImageData::CacheImageData() :
     hour(0),
     min(0),
     sec(0),
+    timestamp(new tm()),
     exifValid(false),
     frameCount(1),
     fnumber(0.0),
@@ -109,26 +110,32 @@ int CacheImageData::load (const Glib::ustring& fname)
             if (timeValid) {
                 if (keyFile.has_key ("DateTime", "Year")) {
                     year    = keyFile.get_integer ("DateTime", "Year");
+                    timestamp->tm_year = static_cast<int>(year)-1900;
                 }
 
                 if (keyFile.has_key ("DateTime", "Month")) {
                     month   = keyFile.get_integer ("DateTime", "Month");
+                    timestamp->tm_mon = static_cast<int>(month)-1;
                 }
 
                 if (keyFile.has_key ("DateTime", "Day")) {
                     day     = keyFile.get_integer ("DateTime", "Day");
+                    timestamp->tm_mday = static_cast<int>(day);
                 }
 
                 if (keyFile.has_key ("DateTime", "Hour")) {
                     hour    = keyFile.get_integer ("DateTime", "Hour");
+                    timestamp->tm_hour = static_cast<int>(hour);
                 }
 
                 if (keyFile.has_key ("DateTime", "Min")) {
                     min     = keyFile.get_integer ("DateTime", "Min");
+                    timestamp->tm_min = static_cast<int>(min);
                 }
 
                 if (keyFile.has_key ("DateTime", "Sec")) {
                     sec     = keyFile.get_integer ("DateTime", "Sec");
+                    timestamp->tm_sec = static_cast<int>(sec);
                 }
             }
 
