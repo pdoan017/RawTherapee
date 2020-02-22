@@ -1544,7 +1544,8 @@ bool FileBrowser::checkFilter (ThumbBrowserEntryBase* entryb) const   // true ->
         && (!filter.exifFilter.filterExpComp || filter.exifFilter.expcomp.count(cfs->expcomp) > 0)
         && (!filter.exifFilter.filterCamera  || filter.exifFilter.cameras.count(cfs->getCamera()) > 0)
         && (!filter.exifFilter.filterLens    || filter.exifFilter.lenses.count(cfs->lens) > 0)
-        && (!filter.exifFilter.filterFiletype  || filter.exifFilter.filetypes.count(cfs->filetype) > 0);
+        && (!filter.exifFilter.filterFiletype  || filter.exifFilter.filetypes.count(cfs->filetype) > 0)
+        && (!filter.exifFilter.filterDates   || filter.exifFilter.dates.count(cfs->getDate()) > 0);
 }
 
 void FileBrowser::toTrashRequested (std::vector<FileBrowserEntry*> tbe)

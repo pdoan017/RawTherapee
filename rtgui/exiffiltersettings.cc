@@ -38,6 +38,7 @@ void ExifFilterSettings::clear ()
     cameras.clear ();
     expcomp.clear ();
     filetypes.clear ();
+    dates.clear ();
 
     filterFNumber = false;
     filterShutter = false;
@@ -47,4 +48,5 @@ void ExifFilterSettings::clear ()
     filterCamera = false;
     filterLens = false;
     filterFiletype = false;
+    filterDates = false;
 }

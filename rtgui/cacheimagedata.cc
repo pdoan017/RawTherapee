@@ -340,6 +340,16 @@ int CacheImageData::save (const Glib::ustring& fname)
     }
 }
 
+/*
+ * Returns date formatted YYYY-MM-DD
+ */
+std::string CacheImageData::getDate() const
+{
+    char date[20];
+    strftime( date, 20, "%F", timestamp );
+    return std::string(date);
+}
+
 rtengine::procparams::IPTCPairs CacheImageData::getIPTCData(unsigned int frame) const
 {
     return {};

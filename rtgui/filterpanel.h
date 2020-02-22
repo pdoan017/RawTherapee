@@ -37,6 +37,7 @@ protected:
     Gtk::ListViewText*      camera;
     Gtk::ListViewText*      lens;
     Gtk::ListViewText*      expcomp;
+    Gtk::ListViewText*      dates;
     Gtk::Entry* fnumberFrom;
     Gtk::Entry* fnumberTo;
     Gtk::Entry* shutterFrom;
@@ -54,6 +55,7 @@ protected:
     Gtk::CheckButton* enaCamera;
     Gtk::CheckButton* enaLens;
     Gtk::CheckButton* enaFiletype;
+    Gtk::CheckButton* enaDates;
 
     int conns;
     sigc::connection sChange[22];

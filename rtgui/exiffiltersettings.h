@@ -30,6 +30,7 @@ public:
     std::set<std::string> cameras;
     std::set<std::string> lenses;
     std::set<std::string> expcomp;
+    std::set<std::string> dates;
     double fnumberFrom;
     double fnumberTo;
     double shutterFrom;
@@ -47,6 +48,7 @@ public:
     bool filterCamera;
     bool filterLens;
     bool filterFiletype;
+    bool filterDates;
 
     ExifFilterSettings ();
     void clear ();

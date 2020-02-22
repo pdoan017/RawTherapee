@@ -789,6 +789,7 @@ void FileCatalog::previewReady (int dir_id, FileBrowserEntry* fdn)
         dirEFS.cameras.insert (cfs->getCamera());
         dirEFS.lenses.insert (cfs->lens);
         dirEFS.expcomp.insert (cfs->expcomp);
+        dirEFS.dates.insert (cfs->getDate());
     }
 
     previewsLoaded++;
