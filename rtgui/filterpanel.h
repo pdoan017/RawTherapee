@@ -37,7 +37,8 @@ protected:
     Gtk::ListViewText*      camera;
     Gtk::ListViewText*      lens;
     Gtk::ListViewText*      expcomp;
-    Gtk::ListViewText*      dates;
+    //Gtk::ListViewText*      dates;
+    Gtk::TreeView* dates;   
     Gtk::Entry* fnumberFrom;
     Gtk::Entry* fnumberTo;
     Gtk::Entry* shutterFrom;
@@ -62,6 +63,21 @@ protected:
 
     ExifFilterSettings curefs;
     FilterPanelListener* listener;
+
+    Glib::RefPtr<Gtk::TreeStore> dlist;
+
+    class ModelColumns : public Gtk::TreeModel::ColumnRecord
+    {
+    public:
+        ModelColumns()
+        {
+            add(m_col_date_val);
+        }
+
+        Gtk::TreeModelColumn<Glib::ustring> m_col_date_val;
+    };
+
+    ModelColumns mColumns;
 
 public:
     FilterPanel ();

@@ -345,7 +345,7 @@ int CacheImageData::save (const Glib::ustring& fname)
  */
 std::string CacheImageData::getDate() const
 {
-    char date[20];
+    static char date[20];
     strftime( date, 20, "%F", timestamp );
     return std::string(date);
 }

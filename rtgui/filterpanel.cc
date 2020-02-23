@@ -137,8 +137,13 @@ FilterPanel::FilterPanel () : listener (nullptr)
     enaDates = Gtk::manage(new Gtk::CheckButton(M("EXIFFILTER_DATES") + ":"));
     Gtk::VBox* dvb = Gtk::manage(new Gtk::VBox ());
     dvb->pack_start (*enaDates, Gtk::PACK_SHRINK, 0);
-    dates = Gtk::manage(new Gtk::ListViewText (1, false, Gtk::SELECTION_MULTIPLE));
+    //dates = Gtk::manage(new Gtk::ListViewText (1, false, Gtk::SELECTION_MULTIPLE));
+    //dates->set_headers_visible (false);
+    dates = Gtk::manage(new Gtk::TreeView());
     dates->set_headers_visible (false);
+    dates->append_column( "Year", mColumns.m_col_date_val );
+    dlist = Gtk::TreeStore::create(mColumns);
+    dates->set_model(dlist);
     Gtk::ScrolledWindow* sdates = Gtk::manage(new Gtk::ScrolledWindow());
     sdates->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_ALWAYS);
     sdates->set_size_request(-1, 80);
@@ -230,6 +235,7 @@ void FilterPanel::setFilter (ExifFilterSettings& defefs, bool updateLists)
 
 //  enaDates->set_active (curefs.filterDates);
     Glib::RefPtr<Gtk::TreeSelection> dselection = dates->get_selection ();
+    dselection->set_mode(Gtk::SELECTION_MULTIPLE);
 
     if( updateLists ) {
         expcomp->clear_items();
@@ -272,11 +278,20 @@ void FilterPanel::setFilter (ExifFilterSettings& defefs, bool updateLists)
 
         ftselection->select_all();
 
-        dates->clear_items();
+        /*dates->clear_items();
         curefs.dates.clear();
 
         for (std::set<std::string>::iterator i = defefs.dates.begin(); i != defefs.dates.end(); ++i) {
             dates->append(*i);
+            curefs.dates.insert(*i);
+        }*/
+        dlist->clear();
+        curefs.dates.clear();
+        Gtk::TreeModel::Row row;
+
+        for (std::set<std::string>::iterator i = defefs.dates.begin(); i != defefs.dates.end(); ++i) {
+            row = *(dlist->append());
+            row[mColumns.m_col_date_val] = *i;
             curefs.dates.insert(*i);
         }
 
@@ -398,10 +413,17 @@ ExifFilterSettings FilterPanel::getFilter ()
         efs.filetypes.insert (filetype->get_text (sel[i]));
     }
 
-    sel = dates->get_selected ();
+    /*sel = dates->get_selected ();
 
     for (size_t i = 0; i < sel.size(); i++) {
         efs.dates.insert (dates->get_text (sel[i]));
+    }*/
+    std::vector<Gtk::TreeModel::Path> selDates = dates->get_selection()->get_selected_rows();
+
+    for (size_t i = 0; i < selDates.size(); i++) {
+        Glib::ustring v;
+        dates->get_model()->get_iter(selDates[i])->get_value(0, v);
+        efs.dates.insert (v);
     }
 
     return efs;
